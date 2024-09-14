@@ -3,7 +3,7 @@
 FROM python:3.9
 
 # Set working directory
-WORKDIR ./
+WORKDIR /
 
 # Copy application files
 COPY ./app /app
