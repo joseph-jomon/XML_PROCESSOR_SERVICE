@@ -9,7 +9,7 @@ WORKDIR /app
 COPY ./app /app
 
 # Install dependencies from requirements.txt
-RUN pip install --no-cache-dir -r ./app/requirements.txt
+RUN pip install --no-cache-dir -r ./requirements.txt
 
 # Install debugpy for debugging
 EXPOSE 21
