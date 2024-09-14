@@ -1,0 +1,24 @@
+# docker-compose.yml
+
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/uploads
+      - ./schemas:/schemas
+
+  ftp:
+    image: stilliard/pure-ftpd:hardened
+    environment:
+      PUBLICHOST: "localhost"
+      FTP_USER_NAME: "user"
+      FTP_USER_PASS: "12345"
+      FTP_USER_HOME: "/uploads"
+    volumes:
+      - ./uploads:/uploads
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
