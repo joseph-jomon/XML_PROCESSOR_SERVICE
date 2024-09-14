@@ -2,12 +2,12 @@ version: '3'
 services:
   ftp:
     build: .
-    working_dir: /
+    working_dir: /app
     volumes:
       - ./uploads:/uploads  # Directory to store uploaded files
       - ./app:/app  # Mount the application code
       - ./schemas:/schemas  # Mount the XSD schemas
-    command: ["python", "app/ftp_handler.py"]  
+    command: ["python", "ftp_handler.py"]  
     ports:
       - "21:21"
       - "30000-30009:30000-30009"
