@@ -8,7 +8,7 @@ from watchdog.events import FileSystemEventHandler
 from xml_validator import validate_xml
 from xml_parser import parse_xml_to_dataframe
 
-UPLOAD_DIR = "./uploads"
+UPLOAD_DIR = "../uploads"
 
 class FTPFileHandler(FileSystemEventHandler):
     def on_created(self, event):
