@@ -29,6 +29,20 @@ class FTPFileHandler(FileSystemEventHandler):
                 self.process_xml_file(file_path)
 
     def process_xml_file(self, xml_file_path):
+        # Extract anbieternummer and Kontingent (you need to implement this based on your XML schema)
+        anbieternummer, kontingent = self.extract_metadata(xml_file_path)
+
+        # Validate anbieternummer and kontingent
+        if not self.validate_provider(anbieternummer):
+            print(f"Invalid anbieternummer: {anbieternummer}")
+            os.remove(xml_file_path)  # Optionally reject the file
+            return
+
+        if not self.check_quota(anbieternummer, kontingent):
+            print(f"Quota exceeded for anbieternummer: {anbieternummer}")
+            os.remove(xml_file_path)  # Optionally reject the file
+            return
+
         # Validate the XML file
         if validate_xml(xml_file_path):
             # Parse the XML file into a Pandas DataFrame
@@ -36,6 +50,25 @@ class FTPFileHandler(FileSystemEventHandler):
             print(f"Processed DataFrame:\n{df.head()}")
         else:
             print(f"Invalid XML file: {xml_file_path}")
+
+    def extract_metadata(self, xml_file_path):
+        # Placeholder function to extract anbieternummer and Kontingent from the XML file
+        # This is where you implement the logic based on the structure of the XML
+        anbieternummer = "sample_number"  # Replace with actual extraction logic
+        kontingent = 100  # Replace with actual extraction logic
+        return anbieternummer, kontingent
+
+    def validate_provider(self, anbieternummer):
+        # Check if anbieternummer is in the database of valid providers
+        # Replace this with a database lookup or a check against a predefined list
+        valid_providers = ["valid_number1", "valid_number2"]
+        return anbieternummer in valid_providers
+
+    def check_quota(self, anbieternummer, kontingent):
+        # Implement logic to check if the provider has reached their quota
+        # For now, we're using a simple example; replace this with real quota tracking
+        current_usage = 50  # Example usage count; replace with database lookup
+        return current_usage < kontingent
 
 def start_ftp_server():
     # Step 1: Create an authorizer to handle user authentication
