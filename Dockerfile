@@ -3,16 +3,18 @@
 FROM python:3.9
 
 # Set working directory
-WORKDIR /app
+WORKDIR ./
 
 # Copy application files
 COPY ./app /app
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies from requirements.txt
+RUN pip install --no-cache-dir -r ./app/requirements.txt
 
-# Expose port for FastAPI
-EXPOSE 8000
+# Install debugpy for debugging
+EXPOSE 21
+EXPOSE 30000-30009
+EXPOSE 5678
 
-# Command to run the FastAPI app
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Default command (can be overridden in docker-compose)
+CMD ["sh", "-c", "python -m debugpy --wait-for-client --listen 0.0.0.0:5678 ftp_handler.py"]

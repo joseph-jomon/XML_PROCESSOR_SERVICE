@@ -1,6 +1,6 @@
-fastapi
-uvicorn
 xmlschema
 xmltodict
 pandas
 pyftpdlib
+watchdog
+debugpy

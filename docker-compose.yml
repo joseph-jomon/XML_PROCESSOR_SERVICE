@@ -1,24 +1,14 @@
-# docker-compose.yml
-
 version: '3'
 services:
-  web:
-    build: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./uploads:/uploads
-      - ./schemas:/schemas
-
   ftp:
-    image: stilliard/pure-ftpd:hardened
-    environment:
-      PUBLICHOST: "localhost"
-      FTP_USER_NAME: "user"
-      FTP_USER_PASS: "12345"
-      FTP_USER_HOME: "/uploads"
+    build: .
+    working_dir: /
     volumes:
-      - ./uploads:/uploads
+      - ./uploads:/uploads  # Directory to store uploaded files
+      - ./app:/app  # Mount the application code
+      - ./schemas:/schemas  # Mount the XSD schemas
+    command: ["sh", "-c", "python -m debugpy --wait-for-client --listen 0.0.0.0:5678 app/ftp_handler.py"]
     ports:
       - "21:21"
       - "30000-30009:30000-30009"
+      - "5678:5678"  # Expose debug port for debugging
