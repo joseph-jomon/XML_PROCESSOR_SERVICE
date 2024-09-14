@@ -5,8 +5,8 @@ from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from app.xml_validator import validate_xml
-from app.xml_parser import parse_xml_to_dataframe
+from xml_validator import validate_xml
+from xml_parser import parse_xml_to_dataframe
 
 UPLOAD_DIR = "./uploads"
 
