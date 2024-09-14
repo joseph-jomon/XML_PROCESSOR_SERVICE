@@ -7,7 +7,8 @@ services:
       - ./uploads:/uploads  # Directory to store uploaded files
       - ./app:/app  # Mount the application code
       - ./schemas:/schemas  # Mount the XSD schemas
-    command: ["python", "ftp_handler.py"]  
+    command: ["sh", "-c", "python -m debugpy --wait-for-client --listen 0.0.0.0:5678 app/ftp_handler.py"]
     ports:
       - "21:21"
       - "30000-30009:30000-30009"
+      - "5678:5678"  # Expose debug port for debugging
